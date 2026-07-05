@@ -1,36 +1,36 @@
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Digital Seva App
+## Getting Started
 
-Digital Seva App is a rural-first digital services platform designed to help citizens find nearby service centers, understand application requirements, prepare documents, communicate with operators, and complete application workflows with more certainty and fewer failed trips.
+First, run the development server:
 
-The MVP focuses on three user groups:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- Citizens who need help with applications, document readiness, status tracking, and payments.
-- Service-center operators who review documents, communicate with users, and complete official submissions.
-- Admins who manage centers, services, disputes, analytics, and platform governance.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## MVP goals
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- Let users search services in Telugu or English.
-- Show required documents before travel or payment.
-- Match users to nearby eligible centers.
-- Allow staged document uploads, including partial submission first and remaining documents later.
-- Support secure pre-payment and post-payment chat with service-center operators.
-- Support partial payment first, then final balance later after operator review or submission.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Core modules
+## Learn More
 
-- Citizen app.
-- Operator portal.
-- Admin portal.
-- AI assistant.
-- Document upload and validation pipeline.
-- Chat and notification system.
-- Payments and settlement layer.
+To learn more about Next.js, take a look at the following resources:
 
-## Working principles
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- Build mobile-first for rural users.
-- Prioritize speed, experimentation, AI-first workflows, and low-code execution where useful.
-- Start with a narrow MVP and one pilot geography before expanding.
-- Treat the repository as the source of truth for architecture, scope, and implementation decisions.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
