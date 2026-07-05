@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
 })
 
 export async function login(formData: FormData) {
@@ -16,7 +16,7 @@ export async function login(formData: FormData) {
   })
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Invalid form data" }
+    return { error: result.error.issues[0]?.message ?? 'Invalid form data' }
   }
 
   const supabase = await createClient()
@@ -33,10 +33,9 @@ export async function login(formData: FormData) {
 }
 
 const signupSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  fullName: z.string().min(2, "Full name is required"),
-  role: z.enum(['citizen', 'operator', 'admin']).default('citizen'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  fullName: z.string().min(2, 'Full name is required'),
 })
 
 export async function signup(formData: FormData) {
@@ -44,11 +43,10 @@ export async function signup(formData: FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
     fullName: formData.get('fullName'),
-    role: formData.get('role') || 'citizen',
   })
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Invalid form data" }
+    return { error: result.error.issues[0]?.message ?? 'Invalid form data' }
   }
 
   const supabase = await createClient()
@@ -58,9 +56,9 @@ export async function signup(formData: FormData) {
     options: {
       data: {
         full_name: result.data.fullName,
-        role: result.data.role,
-      }
-    }
+        role: 'citizen',
+      },
+    },
   })
 
   if (error) {
