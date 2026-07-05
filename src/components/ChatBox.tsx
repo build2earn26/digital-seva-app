@@ -4,24 +4,21 @@ import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 type Message = {
-  id: string;
-  request_id: string;
-  sender_id: string;
-  sender_role: string;
-  content: string;
-  created_at: string;
+  id: string
+  request_id: string
+  sender_id: string
+  content: string
+  created_at: string
 }
 
-export default function ChatBox({ 
-  requestId, 
+export default function ChatBox({
+  requestId,
   initialMessages,
-  currentUserId,
-  currentUserRole 
-}: { 
-  requestId: string, 
-  initialMessages: Message[],
-  currentUserId: string,
-  currentUserRole: string
+  currentUserId
+}: {
+  requestId: string
+  initialMessages: Message[]
+  currentUserId: string
 }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [content, setContent] = useState('')
@@ -34,34 +31,34 @@ export default function ChatBox({
   }, [messages])
 
   useEffect(() => {
-    const channel = supabase.channel(`case-chat-${requestId}`)
+    const channel = supabase
+      .channel(`case-chat-${requestId}`)
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
           table: 'messages',
-          filter: `request_id=eq.${requestId}`
+          filter: `request_id=eq.${requestId}`,
         },
         (payload) => {
-          const newMessage = payload.new as Message;
+          const newMessage = payload.new as Message
           setMessages((prev) => {
-            if (prev.find(m => m.id === newMessage.id)) return prev;
-            return [...prev, newMessage];
+            if (prev.find((m) => m.id === newMessage.id)) return prev
+            return [...prev, newMessage]
           })
         }
       )
       .subscribe(async (status) => {
         if (status === 'SUBSCRIBED') {
-          // Re-fetch messages on successful subscription/reconnection to cover dropped packets
           const { data, error } = await supabase
             .from('messages')
             .select('*')
             .eq('request_id', requestId)
-            .order('created_at', { ascending: true });
-          
+            .order('created_at', { ascending: true })
+
           if (data && !error) {
-            setMessages(data);
+            setMessages(data)
           }
         }
       })
@@ -79,12 +76,11 @@ export default function ChatBox({
     const { error } = await supabase.from('messages').insert({
       request_id: requestId,
       sender_id: currentUserId,
-      sender_role: currentUserRole,
-      content: content.trim()
+      content: content.trim(),
     })
 
     if (error) {
-      alert("Failed to send message: " + error.message)
+      alert('Failed to send message: ' + error.message)
     } else {
       setContent('')
     }
@@ -102,9 +98,13 @@ export default function ChatBox({
           return (
             <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
               <span className="text-xs text-gray-500 mb-1 px-1">
-                <span className="capitalize font-medium">{msg.sender_role}</span> • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
-              <div className={`px-4 py-2 rounded-2xl max-w-[85%] ${isMe ? 'bg-blue-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-900 rounded-bl-none'}`}>
+              <div
+                className={`px-4 py-2 rounded-2xl max-w-[85%] ${
+                  isMe ? 'bg-blue-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-900 rounded-bl-none'
+                }`}
+              >
                 <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
               </div>
             </div>
@@ -117,13 +117,13 @@ export default function ChatBox({
         <input
           type="text"
           value={content}
-          onChange={e => setContent(e.target.value)}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="Type a message..."
           disabled={isSending}
           className="flex-1 px-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isSending || !content.trim()}
           className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed text-white rounded-full text-sm font-medium transition-colors"
         >
