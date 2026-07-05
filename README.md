@@ -1,18 +1,36 @@
-# digital-seva-app
 
-Repository for **Ishan / Digital Seva App**.
+# Digital Seva App
 
-## Purpose
-Enable citizens, service-center operators, and admins to manage service requests, documents, chat, and staged payments.
+Digital Seva App is a rural-first digital services platform designed to help citizens find nearby service centers, understand application requirements, prepare documents, communicate with operators, and complete application workflows with more certainty and fewer failed trips.
 
-## Docs
-- `docs/blueprint.md`
-- `docs/mvp-scope.md`
-- `docs/roles-and-permissions.md`
-- `docs/system-architecture.md`
+The MVP focuses on three user groups:
 
-## Getting started
-1. Clone the repo.
-2. Install dependencies.
-3. Copy `.env.example` to `.env`.
-4. Run the app with documented start command.
+- Citizens who need help with applications, document readiness, status tracking, and payments.
+- Service-center operators who review documents, communicate with users, and complete official submissions.
+- Admins who manage centers, services, disputes, analytics, and platform governance.
+
+## MVP goals
+
+- Let users search services in Telugu or English.
+- Show required documents before travel or payment.
+- Match users to nearby eligible centers.
+- Allow staged document uploads, including partial submission first and remaining documents later.
+- Support secure pre-payment and post-payment chat with service-center operators.
+- Support partial payment first, then final balance later after operator review or submission.
+
+## Core modules
+
+- Citizen app.
+- Operator portal.
+- Admin portal.
+- AI assistant.
+- Document upload and validation pipeline.
+- Chat and notification system.
+- Payments and settlement layer.
+
+## Working principles
+
+- Build mobile-first for rural users.
+- Prioritize speed, experimentation, AI-first workflows, and low-code execution where useful.
+- Start with a narrow MVP and one pilot geography before expanding.
+- Treat the repository as the source of truth for architecture, scope, and implementation decisions.
