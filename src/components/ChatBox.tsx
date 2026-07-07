@@ -14,7 +14,7 @@ type Message = {
 export default function ChatBox({
   requestId,
   initialMessages,
-  currentUserId
+  currentUserId,
     currentUserRole,
 }: {
   requestId: string
