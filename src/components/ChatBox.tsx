@@ -15,10 +15,12 @@ export default function ChatBox({
   requestId,
   initialMessages,
   currentUserId
+    currentUserRole,
 }: {
   requestId: string
   initialMessages: Message[]
   currentUserId: string
+    currentUserRole: string
 }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [content, setContent] = useState('')
