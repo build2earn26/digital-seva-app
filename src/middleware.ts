@@ -25,42 +25,31 @@ export async function middleware(request: NextRequest) {
     }
   )
 
+  // Refresh session — do NOT add DB calls here (Edge runtime limitation)
   const { data: { user } } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
 
-  if (!user && (pathname.startsWith('/citizen') || pathname.startsWith('/operator') || pathname.startsWith('/admin'))) {
+  // Redirect unauthenticated users away from protected routes
+  if (!user && (
+    pathname.startsWith('/citizen') ||
+    pathname.startsWith('/operator') ||
+    pathname.startsWith('/admin')
+  )) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  if (user) {
-    if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/'
-      return NextResponse.redirect(url)
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
-
-    const role = profile?.role || 'citizen'
-
-    if (pathname.startsWith('/operator') && role !== 'operator' && role !== 'admin') {
-      const url = request.nextUrl.clone()
-      url.pathname = '/'
-      return NextResponse.redirect(url)
-    }
-    if (pathname.startsWith('/admin') && role !== 'admin') {
-      const url = request.nextUrl.clone()
-      url.pathname = '/'
-      return NextResponse.redirect(url)
-    }
+  // Redirect authenticated users away from auth pages
+  if (user && (pathname.startsWith('/login') || pathname.startsWith('/signup'))) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.redirect(url)
   }
+
+  // Role-based route protection is handled inside each layout/page
+  // (avoids DB calls in Edge middleware)
 
   return supabaseResponse
 }
