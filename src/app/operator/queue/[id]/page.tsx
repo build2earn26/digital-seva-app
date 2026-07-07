@@ -14,7 +14,7 @@ export default async function OperatorRequestDetail({ params }: { params: { id: 
   
   const { data: request } = await supabase
     .from('service_requests')
-    .select('*, services(title), documents(*), messages(*), payments(*)')
+    .select('*, services(title), service_centers(name, district, mandal, village_or_town), documents(*), messages(*), payments(*)')
     .eq('id', params.id)
     .single()
 
@@ -121,11 +121,26 @@ export default async function OperatorRequestDetail({ params }: { params: { id: 
           </div>
 
           <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">Location / Metadata</h3>
-              <pre className="text-xs bg-gray-50 p-3 rounded-md overflow-auto border">
-                {JSON.stringify(request.metadata, null, 2)}
-              </pre>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">Service Center</h3>
+                {request.service_centers ? (
+                  <div className="bg-gray-50 p-3 rounded-md border text-sm">
+                    <p className="font-medium text-gray-900">{request.service_centers.name}</p>
+                    <p className="text-gray-500">{request.service_centers.district} &gt; {request.service_centers.mandal} &gt; {request.service_centers.village_or_town}</p>
+                  </div>
+                ) : (
+                  <div className="bg-gray-50 p-3 rounded-md border text-sm text-gray-500">
+                    No center selected.
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">Metadata</h3>
+                <pre className="text-xs bg-gray-50 p-3 rounded-md overflow-auto border max-h-24">
+                  {JSON.stringify(request.metadata, null, 2)}
+                </pre>
+              </div>
             </div>
 
             <div className="border-t pt-6">

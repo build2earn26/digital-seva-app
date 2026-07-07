@@ -34,7 +34,7 @@ export default async function AdminServices() {
                   </td>
                   <td className="px-6 py-4">{new Date(svc.created_at).toLocaleDateString()}</td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-blue-600 hover:underline font-medium text-sm">Edit</button>
+                    <Link href={`/admin/services/${svc.id}`} className="text-blue-600 hover:underline font-medium text-sm">Edit</Link>
                   </td>
                 </tr>
               ))}

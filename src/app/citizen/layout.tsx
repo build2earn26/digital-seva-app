@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import CitizenChatbot from '@/components/CitizenChatbot'
 
 export default async function CitizenLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -15,5 +16,10 @@ export default async function CitizenLayout({ children }: { children: React.Reac
     redirect('/')
   }
 
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      <CitizenChatbot />
+    </>
+  )
 }
