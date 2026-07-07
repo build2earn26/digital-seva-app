@@ -66,7 +66,7 @@ export default async function CaseDetailPage({ params }: { params: { id: string 
               requestId={request.id} 
               initialMessages={messages} 
               currentUserId={user.id} 
-              currentUserRole="citizen" 
+
             />
           </div>
           
