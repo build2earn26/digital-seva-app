@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     // 1. Citizen Profile
     const { data: profile } = await supabase
       .from('profiles')
-      .select('full_name, latitude, longitude, location_name')
+      .select('full_name, location_name')
       .eq('id', user.id)
       .single()
 
