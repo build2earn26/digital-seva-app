@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/server'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import CitizenDashboardClient from './CitizenDashboardClient'
 
@@ -15,10 +14,18 @@ export default async function CitizenDashboard() {
     .select('*')
     .order('created_at', { ascending: false })
 
+  // Fetch citizen profile location
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('location_name')
+    .eq('id', user.id)
+    .single()
+
   return (
     <CitizenDashboardClient 
       user={user} 
       services={services || []} 
+      initialLocation={profile?.location_name || null}
     />
   )
 }

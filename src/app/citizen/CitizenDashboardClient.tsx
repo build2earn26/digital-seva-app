@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import LocationCard from '@/components/LocationCard'
 
 interface Service {
   id: string
@@ -12,7 +13,7 @@ interface Service {
   opening_time?: string
 }
 
-export default function CitizenDashboardClient({ user, services }: { user: any, services: Service[] }) {
+export default function CitizenDashboardClient({ user, services, initialLocation }: { user: any, services: Service[], initialLocation: string | null }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [showProfileMenu, setShowProfileMenu] = useState(false)
 
@@ -59,6 +60,8 @@ export default function CitizenDashboardClient({ user, services }: { user: any, 
         </header>
 
         <main className="flex-1 p-4 sm:p-6 max-w-5xl mx-auto w-full space-y-6">
+          <LocationCard initialLocation={initialLocation} />
+
           {/* Dashboard Cards */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Link href="/citizen/applications" className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col items-center justify-center text-center space-y-2 group">
