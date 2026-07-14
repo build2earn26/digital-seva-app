@@ -1,5 +1,7 @@
 -- Seed sample services so the rural feed has content to sort/filter/search.
--- Safe to re-run: uses ON CONFLICT on title.
+-- Re-runnable: a unique index on title backs the ON CONFLICT clause.
+
+create unique index if not exists uniq_services_title on public.services (title);
 
 insert into public.services (title, description, category, subcategory, tags, academic_track, popularity, is_active)
 values
@@ -15,7 +17,7 @@ values
    array['ration','pds','food','bpl'], 'general', 90, true),
   ('Old Age Pension', 'Monthly pension for elderly citizens.', 'welfare', 'pension',
    array['pension','वृद्ध','oldage'], 'general', 78, true),
-  ('Pre-Matric Scholarship', 'Scholarship for school students (Class 1–10).', 'education', 'scholarship',
+  ('Pre-Matric Scholarship', 'Scholarship for school students (Class 1-10).', 'education', 'scholarship',
    array['scholarship','scholar','study'], 'school', 85, true),
   ('Post-Matric Scholarship', 'Scholarship for college / higher-education students.', 'education', 'scholarship',
    array['scholarship','scholar','study'], 'higher_ed', 80, true),
